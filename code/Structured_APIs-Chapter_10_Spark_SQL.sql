@@ -1,6 +1,6 @@
 CREATE TABLE flights (
   DEST_COUNTRY_NAME STRING, ORIGIN_COUNTRY_NAME STRING, count LONG)
-USING JSON OPTIONS (path '/data/flight-data/json/2015-summary.json')
+USING JSON OPTIONS (path '/databricks-datasets/definitive-guide/data/flight-data/json/2015-summary.json')
 
 
 -- COMMAND ----------
@@ -9,7 +9,7 @@ CREATE TABLE flights_csv (
   DEST_COUNTRY_NAME STRING,
   ORIGIN_COUNTRY_NAME STRING COMMENT "remember, the US will be most prevalent",
   count LONG)
-USING csv OPTIONS (header true, path '/data/flight-data/csv/2015-summary.csv')
+USING csv OPTIONS (header true, path '/databricks-datasets/definitive-guide/data/flight-data/csv/2015-summary.csv')
 
 
 -- COMMAND ----------
@@ -33,14 +33,14 @@ AS SELECT DEST_COUNTRY_NAME, ORIGIN_COUNTRY_NAME, count FROM flights LIMIT 5
 
 CREATE EXTERNAL TABLE hive_flights (
   DEST_COUNTRY_NAME STRING, ORIGIN_COUNTRY_NAME STRING, count LONG)
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION '/data/flight-data-hive/'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION '/databricks-datasets/definitive-guide/data/flight-data-hive/'
 
 
 -- COMMAND ----------
 
 CREATE EXTERNAL TABLE hive_flights_2
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
-LOCATION '/data/flight-data-hive/' AS SELECT * FROM flights
+LOCATION '/databricks-datasets/definitive-guide/data/flight-data-hive/' AS SELECT * FROM flights
 
 
 -- COMMAND ----------

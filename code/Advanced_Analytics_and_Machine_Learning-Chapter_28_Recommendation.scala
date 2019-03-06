@@ -1,6 +1,6 @@
 // in Scala
 import org.apache.spark.ml.recommendation.ALS
-val ratings = spark.read.textFile("/data/sample_movielens_ratings.txt")
+val ratings = spark.read.textFile("/databricks-datasets/definitive-guide/data/sample_movielens_ratings.txt")
   .selectExpr("split(value , '::') as col")
   .selectExpr(
     "cast(col[0] as int) as userId",

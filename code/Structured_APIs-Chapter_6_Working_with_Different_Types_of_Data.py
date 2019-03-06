@@ -1,7 +1,7 @@
 df = spark.read.format("csv")\
   .option("header", "true")\
   .option("inferSchema", "true")\
-  .load("/data/retail-data/by-day/2010-12-01.csv")
+  .load("/databricks-datasets/definitive-guide/data/retail-data/by-day/2010-12-01.csv")
 df.printSchema()
 df.createOrReplaceTempView("dfTable")
 

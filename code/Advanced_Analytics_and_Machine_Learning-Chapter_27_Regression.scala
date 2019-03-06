@@ -1,5 +1,5 @@
 // in Scala
-val df = spark.read.load("/data/regression")
+val df = spark.read.load("/databricks-datasets/definitive-guide/data/regression")
 
 
 // COMMAND ----------

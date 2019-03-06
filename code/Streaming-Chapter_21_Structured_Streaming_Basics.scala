@@ -1,5 +1,5 @@
 // in Scala
-val static = spark.read.json("/data/activity-data/")
+val static = spark.read.json("/databricks-datasets/definitive-guide/data/activity-data/")
 val dataSchema = static.schema
 
 
@@ -7,7 +7,7 @@ val dataSchema = static.schema
 
 // in Scala
 val streaming = spark.readStream.schema(dataSchema)
-  .option("maxFilesPerTrigger", 1).json("/data/activity-data")
+  .option("maxFilesPerTrigger", 1).json("/databricks-datasets/definitive-guide/data/activity-data")
 
 
 // COMMAND ----------
@@ -179,10 +179,10 @@ activityCounts.writeStream.trigger(Trigger.Once())
 case class Flight(DEST_COUNTRY_NAME: String, ORIGIN_COUNTRY_NAME: String,
   count: BigInt)
 val dataSchema = spark.read
-  .parquet("/data/flight-data/parquet/2010-summary.parquet/")
+  .parquet("/databricks-datasets/definitive-guide/data/flight-data/parquet/2010-summary.parquet/")
   .schema
 val flightsDF = spark.readStream.schema(dataSchema)
-  .parquet("/data/flight-data/parquet/2010-summary.parquet/")
+  .parquet("/databricks-datasets/definitive-guide/data/flight-data/parquet/2010-summary.parquet/")
 val flights = flightsDF.as[Flight]
 def originIsDestination(flight_row: Flight): Boolean = {
   return flight_row.ORIGIN_COUNTRY_NAME == flight_row.DEST_COUNTRY_NAME

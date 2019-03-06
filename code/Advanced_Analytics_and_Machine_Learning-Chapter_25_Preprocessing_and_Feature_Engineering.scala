@@ -2,12 +2,12 @@
 val sales = spark.read.format("csv")
   .option("header", "true")
   .option("inferSchema", "true")
-  .load("/data/retail-data/by-day/*.csv")
+  .load("/databricks-datasets/definitive-guide/data/retail-data/by-day/*.csv")
   .coalesce(5)
   .where("Description IS NOT NULL")
-val fakeIntDF = spark.read.parquet("/data/simple-ml-integers")
-var simpleDF = spark.read.json("/data/simple-ml")
-val scaleDF = spark.read.parquet("/data/simple-ml-scaling")
+val fakeIntDF = spark.read.parquet("/databricks-datasets/definitive-guide/data/simple-ml-integers")
+var simpleDF = spark.read.json("/databricks-datasets/definitive-guide/data/simple-ml")
+val scaleDF = spark.read.parquet("/databricks-datasets/definitive-guide/data/simple-ml-scaling")
 
 
 // COMMAND ----------

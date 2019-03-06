@@ -1,4 +1,4 @@
-df = spark.read.load("/data/regression")
+df = spark.read.load("/databricks-datasets/definitive-guide/data/regression")
 
 
 # COMMAND ----------

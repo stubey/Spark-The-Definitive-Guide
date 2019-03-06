@@ -5,7 +5,7 @@ case class Flight(DEST_COUNTRY_NAME: String,
 // COMMAND ----------
 
 val flightsDF = spark.read
-  .parquet("/data/flight-data/parquet/2010-summary.parquet/")
+  .parquet("/databricks-datasets/definitive-guide/data/flight-data/parquet/2010-summary.parquet/")
 val flights = flightsDF.as[Flight]
 
 

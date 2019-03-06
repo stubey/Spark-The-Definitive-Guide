@@ -173,7 +173,7 @@ words.repartition(10) // gives us 10 partitions
 
 // in Scala
 val df = spark.read.option("header", "true").option("inferSchema", "true")
-  .csv("/data/retail-data/all/")
+  .csv("/databricks-datasets/definitive-guide/data/retail-data/all/")
 val rdd = df.coalesce(10).rdd
 
 

@@ -1,6 +1,6 @@
 // in Scala
 val df = spark.read.format("json")
-  .load("/data/flight-data/json/2015-summary.json")
+  .load("/databricks-datasets/definitive-guide/data/flight-data/json/2015-summary.json")
 
 
 // COMMAND ----------
@@ -11,7 +11,7 @@ df.printSchema()
 // COMMAND ----------
 
 // in Scala
-spark.read.format("json").load("/data/flight-data/json/2015-summary.json").schema
+spark.read.format("json").load("/databricks-datasets/definitive-guide/data/flight-data/json/2015-summary.json").schema
 
 
 // COMMAND ----------
@@ -28,7 +28,7 @@ val myManualSchema = StructType(Array(
 ))
 
 val df = spark.read.format("json").schema(myManualSchema)
-  .load("/data/flight-data/json/2015-summary.json")
+  .load("/databricks-datasets/definitive-guide/data/flight-data/json/2015-summary.json")
 
 
 // COMMAND ----------
@@ -65,7 +65,7 @@ expr("(((someCol + 5) * 200) - 6) < otherCol")
 
 // COMMAND ----------
 
-spark.read.format("json").load("/data/flight-data/json/2015-summary.json")
+spark.read.format("json").load("/databricks-datasets/definitive-guide/data/flight-data/json/2015-summary.json")
   .columns
 
 
@@ -94,7 +94,7 @@ myRow.getInt(2) // Int
 
 // in Scala
 val df = spark.read.format("json")
-  .load("/data/flight-data/json/2015-summary.json")
+  .load("/databricks-datasets/definitive-guide/data/flight-data/json/2015-summary.json")
 df.createOrReplaceTempView("dfTable")
 
 
@@ -332,7 +332,7 @@ df.orderBy(desc("count"), asc("DEST_COUNTRY_NAME")).show(2)
 // COMMAND ----------
 
 // in Scala
-spark.read.format("json").load("/data/flight-data/json/*-summary.json")
+spark.read.format("json").load("/databricks-datasets/definitive-guide/data/flight-data/json/*-summary.json")
   .sortWithinPartitions("count")
 
 

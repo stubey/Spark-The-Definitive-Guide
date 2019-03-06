@@ -2,7 +2,7 @@
 val df = spark.read.format("csv")
   .option("header", "true")
   .option("inferSchema", "true")
-  .load("/data/retail-data/all/*.csv")
+  .load("/databricks-datasets/definitive-guide/data/retail-data/all/*.csv")
   .coalesce(5)
 df.cache()
 df.createOrReplaceTempView("dfTable")

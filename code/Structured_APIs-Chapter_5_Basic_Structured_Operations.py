@@ -1,9 +1,9 @@
-df = spark.read.format("json").load("/data/flight-data/json/2015-summary.json")
+df = spark.read.format("json").load("/databricks-datasets/definitive-guide/data/flight-data/json/2015-summary.json")
 
 
 # COMMAND ----------
 
-spark.read.format("json").load("/data/flight-data/json/2015-summary.json").schema
+spark.read.format("json").load("/databricks-datasets/definitive-guide/data/flight-data/json/2015-summary.json").schema
 
 
 # COMMAND ----------
@@ -16,7 +16,7 @@ myManualSchema = StructType([
   StructField("count", LongType(), False, metadata={"hello":"world"})
 ])
 df = spark.read.format("json").schema(myManualSchema)\
-  .load("/data/flight-data/json/2015-summary.json")
+  .load("/databricks-datasets/definitive-guide/data/flight-data/json/2015-summary.json")
 
 
 # COMMAND ----------
@@ -46,7 +46,7 @@ myRow[2]
 
 # COMMAND ----------
 
-df = spark.read.format("json").load("/data/flight-data/json/2015-summary.json")
+df = spark.read.format("json").load("/databricks-datasets/definitive-guide/data/flight-data/json/2015-summary.json")
 df.createOrReplaceTempView("dfTable")
 
 
@@ -221,7 +221,7 @@ df.orderBy(col("count").desc(), col("DEST_COUNTRY_NAME").asc()).show(2)
 
 # COMMAND ----------
 
-spark.read.format("json").load("/data/flight-data/json/*-summary.json")\
+spark.read.format("json").load("/databricks-datasets/definitive-guide/data/flight-data/json/*-summary.json")\
   .sortWithinPartitions("count")
 
 

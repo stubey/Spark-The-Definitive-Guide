@@ -1,5 +1,5 @@
 from sparkdl import readImages
-img_dir = '/data/deep-learning-images/'
+img_dir = '/databricks-datasets/definitive-guide/data/deep-learning-images/'
 image_df = readImages(img_dir)
 
 

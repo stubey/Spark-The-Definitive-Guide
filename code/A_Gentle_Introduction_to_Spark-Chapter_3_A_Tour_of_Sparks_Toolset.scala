@@ -4,7 +4,7 @@ case class Flight(DEST_COUNTRY_NAME: String,
                   ORIGIN_COUNTRY_NAME: String,
                   count: BigInt)
 val flightsDF = spark.read
-  .parquet("/data/flight-data/parquet/2010-summary.parquet/")
+  .parquet("/databricks-datasets/definitive-guide/data/flight-data/parquet/2010-summary.parquet/")
 val flights = flightsDF.as[Flight]
 
 
@@ -28,7 +28,7 @@ flights
 val staticDataFrame = spark.read.format("csv")
   .option("header", "true")
   .option("inferSchema", "true")
-  .load("/data/retail-data/by-day/*.csv")
+  .load("/databricks-datasets/definitive-guide/data/retail-data/by-day/*.csv")
 
 staticDataFrame.createOrReplaceTempView("retail_data")
 val staticSchema = staticDataFrame.schema
@@ -61,7 +61,7 @@ val streamingDataFrame = spark.readStream
     .option("maxFilesPerTrigger", 1)
     .format("csv")
     .option("header", "true")
-    .load("/data/retail-data/by-day/*.csv")
+    .load("/databricks-datasets/definitive-guide/data/retail-data/by-day/*.csv")
 
 
 // COMMAND ----------

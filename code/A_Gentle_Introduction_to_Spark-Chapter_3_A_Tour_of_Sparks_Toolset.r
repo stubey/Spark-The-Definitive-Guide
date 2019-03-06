@@ -1,5 +1,5 @@
 library(SparkR)
-sparkDF <- read.df("/data/flight-data/csv/2015-summary.csv",
+sparkDF <- read.df("/databricks-datasets/definitive-guide/data/flight-data/csv/2015-summary.csv",
          source = "csv", header="true", inferSchema = "true")
 take(sparkDF, 5)
 

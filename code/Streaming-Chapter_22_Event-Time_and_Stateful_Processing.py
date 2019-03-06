@@ -1,10 +1,10 @@
 spark.conf.set("spark.sql.shuffle.partitions", 5)
-static = spark.read.json("/data/activity-data")
+static = spark.read.json("/databricks-datasets/definitive-guide/data/activity-data")
 streaming = spark\
   .readStream\
   .schema(static.schema)\
   .option("maxFilesPerTrigger", 10)\
-  .json("/data/activity-data")
+  .json("/databricks-datasets/definitive-guide/data/activity-data")
 
 
 # COMMAND ----------

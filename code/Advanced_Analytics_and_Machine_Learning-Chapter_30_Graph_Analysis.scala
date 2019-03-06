@@ -1,8 +1,8 @@
 // in Scala
 val bikeStations = spark.read.option("header","true")
-  .csv("/data/bike-data/201508_station_data.csv")
+  .csv("/databricks-datasets/definitive-guide/data/bike-data/201508_station_data.csv")
 val tripData = spark.read.option("header","true")
-  .csv("/data/bike-data/201508_trip_data.csv")
+  .csv("/databricks-datasets/definitive-guide/data/bike-data/201508_trip_data.csv")
 
 
 // COMMAND ----------

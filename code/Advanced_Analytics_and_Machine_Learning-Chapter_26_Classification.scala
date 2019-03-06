@@ -1,5 +1,5 @@
 // in Scala
-val bInput = spark.read.format("parquet").load("/data/binary-classification")
+val bInput = spark.read.format("parquet").load("/databricks-datasets/definitive-guide/data/binary-classification")
   .selectExpr("features", "cast(label as double) as label")
 
 

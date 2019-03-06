@@ -4,7 +4,7 @@ spark.sql("SELECT 1 + 1").show()
 // COMMAND ----------
 
 // in Scala
-spark.read.json("/data/flight-data/json/2015-summary.json")
+spark.read.json("/databricks-datasets/definitive-guide/data/flight-data/json/2015-summary.json")
   .createOrReplaceTempView("some_sql_view") // DF => SQL
 
 spark.sql("""
@@ -18,7 +18,7 @@ FROM some_sql_view GROUP BY DEST_COUNTRY_NAME
 // COMMAND ----------
 
 val flights = spark.read.format("json")
-  .load("/data/flight-data/json/2015-summary.json")
+  .load("/databricks-datasets/definitive-guide/data/flight-data/json/2015-summary.json")
 val just_usa_df = flights.where("dest_country_name = 'United States'")
 just_usa_df.selectExpr("*").explain
 

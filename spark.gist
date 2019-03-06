@@ -1,0 +1,116 @@
+https://community.cloud.databricks.com/?o=487350137924750
+tom.stubitsch@xtremedata.com
+da~
+
+
+
+																Dataset API
+RDD													DataFrame					Dataset
+Lower-level									High-Level (built on RDD)
+Unstructured data						Structured Data (named columns)
+Functional Programming			Domain specific
+SparkSQL(?)									SparkSQL(?)
+Specialized data engr				User
+														agg, select, avg, map, filter, groupby
+														val dsAvgTmp = ds.filter(d => {d.temp > 25}).map(d => (d.temp, d.humidity, d.cca3)).groupBy($"_3").avg()
+														//display the resulting dataset
+														display(dsAvgTmp)
+Not type safe (R, Python)		Typed API
+														Untyped objects			Typed Objects
+														DF[Untyped Row]			DS[Typed Object]
+														DF[JSON map]				DS[Typed Objects]
+														Catalyst Optimizer
+														- compile time optimizer
+														- generate code at runtime from composable expressions.
+
+
+									SQL				DataFrames			Datasets
+Syntax Error			Runtime		Compile Time		Compile Time
+Analysis Error	 	Runtime		Runtime					Compile Time
+(bad col name)
+
+
+The entire dataset has to fit in memory
+Storage memory is used to cache data that will be reused later.
+
+TPC-DS Results - Catalyst + CBO (2017.08.31)
+	4 x (40 cores + 384GB)
+	https://databricks.com/blog/2017/08/31/cost-based-optimizer-in-apache-spark-2-2.html
+
+Oracle DAX - 16X(?)
+	The Oracle Data Analytics Accelerator (DAX) is a coprocessor built into the SPARC M7, S7, and M8 chips, which can perform various operations on data streams. These operations are particularly suited to accelerate database queries but have a wide variety of uses in the field of data analytics.
+		Scan (find -> bit-vector)
+		Select (Scan bit-vector + Data -> Data)
+		Extract - Format conversions (compression, RLE, ???)
+		Translate - vector[bitmap_index] + bitmap[] -> bitmap[]
+
+	Optimized memory - separate ddr datapath, direct to L3
+	Inline decompress-operate-compress (no temp storage)
+
+Whereas the Dataset[T] typed API is optimized for data engineering tasks, the untyped Dataset[Row] (an alias of DataFrame) is even faster and suitable for interactive analysis.
+
+Tansformations are lazy (views) - map(), flatmap(), filter()
+
+RDDs
+	Optimize each and every RDD operation
+	Don’t infer the schema of the data ingested
+
+DataFrames
+	Internally strings(??? - think not, but asking)
+
+Datasets
+	Require typecasting into strings - ???
+	Lots of needless conversions for some reason
+
+But...
+	DS optimizer is not too bright - not a C++ compiler by any means.
+	Optimiznig byte code, not source code.
+	DS runs much slower (v2.0) to slower (v2.2) than RDD's.
+
+
+Catalyst
+	Catalyst contains a general library for representing trees and applying rules to manipulate them. On top of this framework, it has libraries specific to relational query processing (e.g., expressions, logical query plans), and several sets of rules that handle different phases of query execution: analysis, logical optimization, physical planning, and code generation to compile parts of queries to Java bytecode. For the latter, it uses another Scala feature, quasiquotes, that makes it easy to generate code at runtime from composable expressions. Catalyst also offers several public extension points, including external data sources and user-defined types. As well, Catalyst supports both rule-based and cost-based optimization.
+
+	Catalyst is based on functional programming constructs in Scala and designed with these key two purposes:
+		Easily add new optimization techniques and features to Spark SQL
+		Enable external developers to extend the optimizer (e.g. adding data source specific rules, support for new data types, etc.
+
+	SQL Query Planner (w/ cost/rule based rtcg)
+
+
+
+SparkSQL
+	Spark SQL is a Spark module for structured data processing. It provides a programming abstraction called DataFrames and can also act as a distributed SQL query engine
+
+Tungsten
+	Tungsten is the codename for the umbrella project to make changes to Apache Spark’s execution engine that focuses on substantially improving the efficiency of memory and CPU for Spark applications, to push performance closer to the limits of modern hardware. This effort includes the following initiatives:
+
+	Memory Management and Binary Processing: leveraging application semantics to manage memory explicitly and eliminate the overhead of JVM object model and garbage collection
+	Cache-aware computation: algorithms and data structures to exploit memory hierarchy
+	Code generation: using code generation to exploit modern compilers and CPUs
+	No virtual function dispatches: this reduces multiple CPU calls which can have a profound impact on performance when dispatching billions of times.
+	Intermediate data in memory vs CPU registers: Tungsten Phase 2 places intermediate data into CPU registers. This is an order of magnitudes reduction in the number of cycles to obtain data from the CPU registers instead of from memory
+	Loop unrolling and SIMD: Optimize Apache Spark’s execution engine to take advantage of modern compilers and CPUs’ ability to efficiently compile and execute simple for loops (as opposed to complex function call graphs).
+	The focus on CPU efficiency is motivated by the fact that Spark workloads are increasingly bottlenecked by CPU and memory use rather than IO and network communication. The trend is shown by recent research on the performance of big data workloads.
+
+If you are a R user, use DataFrames.
+If you are a Python user, use DataFrames and resort back to RDDs if you need more control.
+
+convert from DataFrame and/or Dataset to an RDD, by simple method call .rdd
+	val deviceEventsDS = ds.select($"device_name", $"cca3", $"c02_level").where($"c02_level" > 1300)
+	// convert to RDDs and take the first 10 rows
+	val eventsRDD = deviceEventsDS.rdd.take(10)
+
+In summation, the choice of when to use RDD or DataFrame and/or Dataset seems obvious. While the former offers you low-level functionality and control, the latter allows custom view and structure, offers high-level and domain specific operations, saves space, and executes at superior speeds.
+
+
+Apache Kylin - MOLAP Hive SQL & ODBC (Cube builder/queryer)
+	Apache Kylin is a distributed open source online analytics processing (OLAP) engine for interactive analytics Big Data. Apache Kylin has been designed to provide SQL interface and multi-dimensional analysis (OLAP) on Hadoop/Spark.
+
+	It gets its amazing speed by precomputing the various dimensional combinations and the measure aggregates via Hive queries and populating HBase with the results.
+
+	Requires Hadoop
+		Hive – Input source, pre-join star schema during cube building
+		MapReduce – Aggregate metrics during cube building
+		HDFS – Store intermediate files during cube building
+		HBase – Store and query data cubes

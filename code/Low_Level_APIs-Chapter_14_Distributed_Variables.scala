@@ -37,7 +37,7 @@ words.map(word => (word, suppBroadcast.value.getOrElse(word, 0)))
 case class Flight(DEST_COUNTRY_NAME: String,
                   ORIGIN_COUNTRY_NAME: String, count: BigInt)
 val flights = spark.read
-  .parquet("/data/flight-data/parquet/2010-summary.parquet")
+  .parquet("/databricks-datasets/definitive-guide/data/flight-data/parquet/2010-summary.parquet")
   .as[Flight]
 
 

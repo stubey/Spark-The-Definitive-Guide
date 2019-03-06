@@ -40,7 +40,7 @@ spark.read.format("csv")
   .option("header", "true")
   .option("mode", "FAILFAST")
   .schema(myManualSchema)
-  .load("/data/flight-data/csv/2010-summary.csv")
+  .load("/databricks-datasets/definitive-guide/data/flight-data/csv/2010-summary.csv")
   .show(5)
 
 
@@ -56,7 +56,7 @@ spark.read.format("csv")
   .option("header", "true")
   .option("mode", "FAILFAST")
   .schema(myManualSchema)
-  .load("/data/flight-data/csv/2010-summary.csv")
+  .load("/databricks-datasets/definitive-guide/data/flight-data/csv/2010-summary.csv")
   .take(5)
 
 
@@ -65,7 +65,7 @@ spark.read.format("csv")
 // in Scala
 val csvFile = spark.read.format("csv")
   .option("header", "true").option("mode", "FAILFAST").schema(myManualSchema)
-  .load("/data/flight-data/csv/2010-summary.csv")
+  .load("/databricks-datasets/definitive-guide/data/flight-data/csv/2010-summary.csv")
 
 
 // COMMAND ----------
@@ -84,7 +84,7 @@ spark.read.format("json")
 
 // in Scala
 spark.read.format("json").option("mode", "FAILFAST").schema(myManualSchema)
-  .load("/data/flight-data/json/2010-summary.json").show(5)
+  .load("/databricks-datasets/definitive-guide/data/flight-data/json/2010-summary.json").show(5)
 
 
 // COMMAND ----------
@@ -107,7 +107,7 @@ spark.read.format("parquet")
 
 // in Scala
 spark.read.format("parquet")
-  .load("/data/flight-data/parquet/2010-summary.parquet").show(5)
+  .load("/databricks-datasets/definitive-guide/data/flight-data/parquet/2010-summary.parquet").show(5)
 
 
 // COMMAND ----------
@@ -120,7 +120,7 @@ csvFile.write.format("parquet").mode("overwrite")
 // COMMAND ----------
 
 // in Scala
-spark.read.format("orc").load("/data/flight-data/orc/2010-summary.orc").show(5)
+spark.read.format("orc").load("/databricks-datasets/definitive-guide/data/flight-data/orc/2010-summary.orc").show(5)
 
 
 // COMMAND ----------
@@ -133,7 +133,7 @@ csvFile.write.format("orc").mode("overwrite").save("/tmp/my-json-file.orc")
 
 // in Scala
 val driver =  "org.sqlite.JDBC"
-val path = "/data/flight-data/jdbc/my-sqlite.db"
+val path = "/databricks-datasets/definitive-guide/data/flight-data/jdbc/my-sqlite.db"
 val url = s"jdbc:sqlite:/${path}"
 val tablename = "flight_info"
 
@@ -274,7 +274,7 @@ spark.read.jdbc(newPath, tablename, props).count() // 765
 
 // COMMAND ----------
 
-spark.read.textFile("/data/flight-data/csv/2010-summary.csv")
+spark.read.textFile("/databricks-datasets/definitive-guide/data/flight-data/csv/2010-summary.csv")
   .selectExpr("split(value, ',') as rows").show()
 
 

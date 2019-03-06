@@ -8,7 +8,7 @@ sparseVec = Vectors.sparse(size, idx, values)
 
 # COMMAND ----------
 
-df = spark.read.json("/data/simple-ml")
+df = spark.read.json("/databricks-datasets/definitive-guide/data/simple-ml")
 df.orderBy("value2").show()
 
 

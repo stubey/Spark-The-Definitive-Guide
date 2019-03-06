@@ -1,7 +1,7 @@
 staticDataFrame = spark.read.format("csv")\
   .option("header", "true")\
   .option("inferSchema", "true")\
-  .load("/data/retail-data/by-day/*.csv")
+  .load("/databricks-datasets/definitive-guide/data/retail-data/by-day/*.csv")
 
 staticDataFrame.createOrReplaceTempView("retail_data")
 staticSchema = staticDataFrame.schema
@@ -28,7 +28,7 @@ streamingDataFrame = spark.readStream\
     .option("maxFilesPerTrigger", 1)\
     .format("csv")\
     .option("header", "true")\
-    .load("/data/retail-data/by-day/*.csv")
+    .load("/databricks-datasets/definitive-guide/data/retail-data/by-day/*.csv")
 
 
 # COMMAND ----------

@@ -12,14 +12,14 @@ denseVec.toSparse
 // COMMAND ----------
 
 // in Scala
-var df = spark.read.json("/data/simple-ml")
+var df = spark.read.json("/databricks-datasets/definitive-guide/data/simple-ml")
 df.orderBy("value2").show()
 
 
 // COMMAND ----------
 
 spark.read.format("libsvm").load(
-  "/data/sample_libsvm_data.txt")
+  "/databricks-datasets/definitive-guide/data/sample_libsvm_data.txt")
 
 
 // COMMAND ----------

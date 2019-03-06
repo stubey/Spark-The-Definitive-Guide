@@ -5,7 +5,7 @@ spark <- sparkR.session()
 # COMMAND ----------
 
 retail.data <- read.df(
-  "/data/retail-data/all/",
+  "/databricks-datasets/definitive-guide/data/retail-data/all/",
   "csv",
   header="true",
   inferSchema="true")
@@ -72,12 +72,12 @@ tbls %>%
 # COMMAND ----------
 
 retail.data <- read.df(
-  "/data/retail-data/all/",
+  "/databricks-datasets/definitive-guide/data/retail-data/all/",
   "csv",
   header="true",
   inferSchema="true")
 flight.data <- read.df(
-  "/data/flight-data/parquet/2010-summary.parquet",
+  "/databricks-datasets/definitive-guide/data/flight-data/parquet/2010-summary.parquet",
   "parquet")
 
 
