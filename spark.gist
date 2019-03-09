@@ -1,6 +1,35 @@
+A Deep Dive into Spark SQL's Catalyst Optimizer with Yin Huai
+	https://www.youtube.com/watch?v=RmUn5vHlevc
+
+	Spark SQL includes SQL, DF, DS, Catalyst (optimizer)
+	Basis for ML Pipelines, Structured Streaming, Graph Frames
+
+		  | ML Pipelines | Structred Streaming | Graph Frames
+	RDD |	SQL | Dataframes | Datasets |
+		  |             Catalyst        |
+	CoreSpark
+
+
+	DF
+		data.groupBy("dept").avg("age")
+
+	RDD
+		data.map { case (dept, age) => data -> (age, 1)}
+			.reduceByKey({ case ((a1, c2), (a2, c2)) => (a1 + a2, c1 + c2)
+			.map( { case (dept, (age, c)) => dept -> age / c }
+
+
+
+
+===========================
 https://community.cloud.databricks.com/?o=487350137924750
 tom.stubitsch@xtremedata.com
 da~
+
+Turned off ?? in linux firefox about:config to allow localhost http spark webserver gui
+
+
+===============
 
 
 
