@@ -1,13 +1,14 @@
-A Deep Dive into Spark SQL's Catalyst Optimizer with Yin Huai
-	https://www.youtube.com/watch?v=RmUn5vHlevc
+A Deep Dive into Spark SQL's Catalyst Optimizer with Yin Huai - Good - READ SOURCE CODE
+	https://databricks.com/session/a-deep-dive-into-spark-sqls-catalyst-optimizer
+	https://www.slideshare.net/databricks/a-deep-dive-into-spark-sqls-catalyst-optimizer-with-yin-huai
 
 	Spark SQL includes SQL, DF, DS, Catalyst (optimizer)
 	Basis for ML Pipelines, Structured Streaming, Graph Frames
 
-		  | ML Pipelines | Structred Streaming | Graph Frames
-	RDD |	SQL | Dataframes | Datasets |
-		  |             Catalyst        |
-	CoreSpark
+		            | ML Pipelines | Structred Streaming | Graph Frames |
+		  |	  SQL   | -----------  Dataframes/ Dataset  --------------- |
+		  | ---------------------  Catalyst --------------------------- |
+	| ----------------------  Spark Core (RDD)  --------------------- |
 
 
 	DF
@@ -19,7 +20,12 @@ A Deep Dive into Spark SQL's Catalyst Optimizer with Yin Huai
 			.map( { case (dept, (age, c)) => dept -> age / c }
 
 
+	Transforms tree to better tree
+========
+FPGA accelerated Spark SQL - data conversion, summing, ...
+	https://databricks.com/session/fpga-based-acceleration-architecture-for-spark-sql
 
+	also, spark data compression offload
 
 ===========================
 https://community.cloud.databricks.com/?o=487350137924750
@@ -30,6 +36,30 @@ Turned off ?? in linux firefox about:config to allow localhost http spark webser
 
 
 ===============
+Extending Apache Spark SQL Data Source APIs with Join Push Down - RDMS Much faster than Spark
+	https://www.slideshare.net/databricks/extending-apache-spark-sql-data-source-apis-with-join-push-down-with-ioana-delaney-and-jia-li
+
+	Slide 20 - TPC-DS Performance Results
+
+		RDMS is much faster than Spark
+			Q8	8x		32s  -> 4s
+			Q13	25x   121s -> 5s
+			Q25 21x 	152s -> 7s
+			Q48 31x   155s -> 5s
+			Q68 17x   69s  -> 4s
+			....
+
+
+
+		1 TB TPC-DS Performance Results
+		20#EUdev7
+		• Proxy of a real data warehouse
+		• Retail product supplier e.g. retail sales, we...
+
+
+===============
+
+
 
 
 
@@ -143,3 +173,15 @@ Apache Kylin - MOLAP Hive SQL & ODBC (Cube builder/queryer)
 		MapReduce – Aggregate metrics during cube building
 		HDFS – Store intermediate files during cube building
 		HBase – Store and query data cubes
+
+==========
+# SPARK
+export SPARK_HOME=/home/tom/apps/spark-2.4.0-bin-hadoop2.7
+AddPath "$SPARK_HOME/bin"
+# Stop ctl-c from exiting spark-shell
+alias spark-shell="bash -c \"trap '' SIGINT; spark-shell\""
+=====
+SparkShell/ScalaRepl
+:save sess
+:load sdd
+:reset
